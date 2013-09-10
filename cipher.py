@@ -11,6 +11,8 @@ def verify_cb(conn, cert, errnum, depth, ok):
     return ok
 
 
+print "OpenSSL", SSL.OPENSSL_VERSION_NUMBER
+
 for method_name, method in [("SSLv2", SSL.SSLv2_METHOD),
                             ("SSLv3", SSL.SSLv3_METHOD),
                             ("TLSv1", SSL.TLSv1_METHOD)]:
