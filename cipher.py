@@ -5,6 +5,16 @@ import socket, sys
 
 from OpenSSL import SSL
 
+def audit(cipher):
+    c = cipher.split('-')
+    if c[1] == "DSS" or "3DES" in c or "RC4" in c:
+        return "↓ "
+    if c[0] == "DHE":
+        return "↑ "
+    if c[0] == "ECDHE":
+        return "↑↑"
+    return "→ "
+
 
 def verify_cb(conn, cert, errnum, depth, ok):
     # This obviously has to be updated
@@ -41,10 +51,11 @@ for method_name, method in [("SSLv23", SSL.SSLv23_METHOD),
         sock.connect((sys.argv[1], int(sys.argv[2])))
         try:
             sock.do_handshake()
-            print "✓", cipher
+            print "✓", audit(cipher), cipher
             sock.close()
         except SSL.Error:
-            print "✗", cipher
+            #print "✗", audit(cipher), cipher
+            pass
 
     #print sock.get_peer_cert_chain()
     #print sock.get_cipher_list()
