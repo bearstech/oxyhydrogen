@@ -7,13 +7,24 @@ from OpenSSL import SSL
 
 def audit(cipher):
     c = cipher.split('-')
-    if c[1] == "DSS" or "3DES" in c or "RC4" in c:
-        return "↓ "
+    bad = ["DSS", "3DES", "RC4", "RC2", "DES", "NULL", "EXP", "EXP1024"]
+    for b in bad:
+        if b in c:
+            return "↓    "
+    if c[1] == "DSS":
+        return "↓    "
+    score = 0
     if c[0] == "DHE":
-        return "↑ "
-    if c[0] == "ECDHE":
-        return "↑↑"
-    return "→ "
+        score += 1
+    elif c[0] == "ECDHE":
+        score += 2
+    if "GCM" in c:
+        score += 1
+    if "SHA384" in c:
+        score += 1
+    if score == 0:
+        return "→    "
+    return (u"↑" * score).ljust(5, u" ")
 
 
 def verify_cb(conn, cert, errnum, depth, ok):
