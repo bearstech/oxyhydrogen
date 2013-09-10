@@ -26,7 +26,7 @@ https://briansmith.org/browser-ciphersuites-01.html
 Todo
 ----
 
-The code is ugly, some TLS test can be nice, too.
+The code is ugly.
 
 Licence
 -------
