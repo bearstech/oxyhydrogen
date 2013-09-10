@@ -11,16 +11,22 @@ def verify_cb(conn, cert, errnum, depth, ok):
     return ok
 
 
-for method_name, method in [("SSLv23", SSL.SSLv23_METHOD), ("TLSv1", SSL.TLSv1_METHOD)]:
-    print "#", method_name
+for method_name, method in [("SSLv2", SSL.SSLv2_METHOD),
+                            ("SSLv3", SSL.SSLv3_METHOD),
+                            ("TLSv1", SSL.TLSv1_METHOD)]:
+    print "\n#", method_name
     ctx = SSL.Context(method)
-    ctx.set_verify(SSL.VERIFY_PEER, verify_cb) # Demand a certificate
+    ctx.set_verify(SSL.VERIFY_PEER, verify_cb)  # Demand a certificate
 
 
     sock = SSL.Connection(ctx, socket.socket(socket.AF_INET, socket.SOCK_STREAM))
-    sock.connect((sys.argv[1], int(sys.argv[2])))
+    try:
+        sock.connect((sys.argv[1], int(sys.argv[2])))
 
-    sock.do_handshake()
+        sock.do_handshake()
+    except SSL.ZeroReturnError:
+        print "Not handled"
+        continue
     ciphers = sock.get_cipher_list()
     sock.close()
 
