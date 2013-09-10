@@ -8,7 +8,7 @@ Install
 
 Install the _python-openssl_ package on Debian like Linux.
 
-Install the _pyOpenSSL_ package on other OS. Be careful, on MacOS X, use openssl from brew, it's fresher.
+Install the _pyOpenSSL_ package on other OS. Be careful, on MacOS X, use openssl from brew, it's fresher but painful to install.
 
 Use
 ---

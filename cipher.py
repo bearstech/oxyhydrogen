@@ -19,7 +19,8 @@ for method_name, method in [("SSLv23", SSL.SSLv23_METHOD),
                             ("TLSv1", SSL.TLSv1_METHOD)]:
     print "\n#", method_name
     ctx = SSL.Context(method)
-    ctx.set_verify(SSL.VERIFY_PEER, verify_cb)  # Demand a certificate
+    # FIXME crash with Openssl v1
+    #ctx.set_verify(SSL.VERIFY_PEER, verify_cb)  # Demand a certificate
 
 
     sock = SSL.Connection(ctx, socket.socket(socket.AF_INET, socket.SOCK_STREAM))
@@ -27,9 +28,10 @@ for method_name, method in [("SSLv23", SSL.SSLv23_METHOD),
         sock.connect((sys.argv[1], int(sys.argv[2])))
 
         sock.do_handshake()
-    except SSL.ZeroReturnError:
+    except SSL.Error:
         print "Not handled"
         continue
+
     ciphers = sock.get_cipher_list()
     sock.close()
 
