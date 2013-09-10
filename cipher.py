@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# encoding: utf8
 import socket, sys
 #!/usr/bin/env python
 
@@ -38,10 +39,10 @@ for method_name, method in [("SSLv23", SSL.SSLv23_METHOD),
         sock.connect((sys.argv[1], int(sys.argv[2])))
         try:
             sock.do_handshake()
-            print " ", cipher
+            print "✓", cipher
             sock.close()
         except SSL.Error:
-            print "!", cipher
+            print "✗", cipher
 
     #print sock.get_peer_cert_chain()
     #print sock.get_cipher_list()
