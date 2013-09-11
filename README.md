@@ -21,7 +21,10 @@ It works with any ssl server, not only HTTPS.
 More
 ----
 
-https://briansmith.org/browser-ciphersuites-01.html
+ * http://www.openssl.org/docs/apps/ciphers.html
+ * https://briansmith.org/browser-ciphersuites-01.html
+ * https://blog.thijsalkema.de/blog/2013/09/02/the-state-of-tls-on-xmpp-3/
+
 
 Todo
 ----
