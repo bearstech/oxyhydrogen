@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf8
-import socket, sys
-#!/usr/bin/env python
+
+import socket
+import sys
 
 from OpenSSL import SSL
 
@@ -43,8 +44,8 @@ for method_name, method in [("SSLv23", SSL.SSLv23_METHOD),
     # FIXME crash with Openssl v1
     #ctx.set_verify(SSL.VERIFY_PEER, verify_cb)  # Demand a certificate
 
-
-    sock = SSL.Connection(ctx, socket.socket(socket.AF_INET, socket.SOCK_STREAM))
+    sock = SSL.Connection(ctx, socket.socket(socket.AF_INET,
+                                             socket.SOCK_STREAM))
     try:
         sock.connect((sys.argv[1], int(sys.argv[2])))
 
@@ -58,7 +59,8 @@ for method_name, method in [("SSLv23", SSL.SSLv23_METHOD),
 
     for cipher in ciphers:
         ctx.set_cipher_list(cipher)
-        sock = SSL.Connection(ctx, socket.socket(socket.AF_INET, socket.SOCK_STREAM))
+        sock = SSL.Connection(ctx, socket.socket(socket.AF_INET,
+                                                 socket.SOCK_STREAM))
         sock.connect((sys.argv[1], int(sys.argv[2])))
         try:
             sock.do_handshake()
