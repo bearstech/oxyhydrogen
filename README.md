@@ -24,6 +24,7 @@ More
  * http://www.openssl.org/docs/apps/ciphers.html
  * https://briansmith.org/browser-ciphersuites-01.html
  * https://blog.thijsalkema.de/blog/2013/09/02/the-state-of-tls-on-xmpp-3/
+ * https://datatracker.ietf.org/doc/draft-saintandre-xmpp-tls/?include_text=1
 
 
 Todo

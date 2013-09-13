@@ -15,7 +15,7 @@ def audit(cipher):
     if c[1] == "DSS":
         return "↓    "
     score = 0
-    if c[0] == "DHE":
+    if c[0] == "DHE" or c[0] == "EDH":
         score += 1
     elif c[0] == "ECDHE":
         score += 2
