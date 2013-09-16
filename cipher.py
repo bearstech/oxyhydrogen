@@ -3,8 +3,22 @@
 
 import socket
 import sys
+from subprocess import Popen, PIPE
 
 from OpenSSL import SSL
+
+CIPHERS = None
+
+def cipers_level(cipher):
+    global CIPHERS
+    if CIPHERS is None:
+        CIPHERS = {}
+        for strength in ['HIGH', 'MEDIUM', 'LOW', 'EXPORT']:
+            p = Popen(['openssl', 'ciphers', strength], stdout=PIPE)
+            for c in p.stdout.readline()[:-1].split(':'):
+                CIPHERS[c] = strength
+    return CIPHERS.get(cipher, "?")
+
 
 def audit(cipher):
     c = cipher.split('-')
@@ -64,7 +78,7 @@ for method_name, method in [("SSLv23", SSL.SSLv23_METHOD),
         sock.connect((sys.argv[1], int(sys.argv[2])))
         try:
             sock.do_handshake()
-            print "✓", audit(cipher), cipher
+            print "✓", audit(cipher), "[%s]" % cipers_level(cipher).ljust(6), cipher
             sock.close()
         except SSL.Error:
             #print "✗", audit(cipher), cipher
